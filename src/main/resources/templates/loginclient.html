@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Connexion Admin</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #dee2e6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .form-container {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 400px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        background-color: #0d6efd;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      .message {
+        text-align: center;
+        margin-top: 15px;
+        display: none;
+      }
+
+      .success {
+        color: green;
+      }
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h2>Connexion Client</h2>
+      <form th:object="${clientcnx}" method="post">
+        <label for="email">Email</label>
+        <input th:field="*{email}" type="email" id="email" required />
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+          code error
+        </div>
+
+        <label for="password">Mot de passe</label>
+        <input th:field="*{password}" type="password" id="password" required />
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+          code error
+        </div>
+        <button type="submit">Se connecter</button>
+      </form>
+      <div class="message success" id="loginSuccess">Connexion réussie !</div>
+      <div class="message error" id="loginError">Identifiants invalides</div>
+    </div>
+  </body>
+</html>

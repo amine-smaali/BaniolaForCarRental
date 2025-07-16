@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/aa.css" />
+    <title>Baniola - Location de Voitures de Luxe</title>
+  </head>
+  <body>
+    <header class="header">
+      <a href="/" class="logo">Baniola</a>
+      <nav class="nav-links">
+        <div class="dropdown">
+          <button class="dropbtn">
+            <i class="fas fa-user"></i>
+            <span th:text="${user.nom}">Jean Dupont</span>
+            <i class="fas fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <a
+              th:href="@{|/profil/${user.id}|}"
+              th:text="'Informations personnelles'"
+            ></a>
+            <a
+              th:href="@{|/historique/${user.id}|}"
+              th:text="'Historique des réservations'"
+            ></a>
+            <a th:href="@{|/logout/${user.id}|}" th:text="'Déconnexion'"></a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>L'Excellence Automobile</h1>
+        <p>Découvrez notre sélection exclusive de véhicules de prestige</p>
+        <a href="#collection" class="cta-button">Explorer la collection</a>
+      </div>
+    </section>
+
+    <section class="collection-section" id="collection">
+      <h2 class="section-title">Notre Sélection</h2>
+      <div class="car-grid">
+        <!-- Liste dynamique des voitures -->
+        <div th:each="car : ${cars}">
+          <article class="car-card">
+            <div
+              class="car-image"
+              th:style="'background-image: url(' + ${car.photo} + ');'"
+            >
+            <img
+            th:src="(${car.photo})?@{|/images/${car.photo}|}:@{null.jpg}"
+            style="max-height: 400px; max-width: 500px"
+          />
+              <div class="car-overlay">
+                <a th:href="@{|/car-details/${user.id}/${car.id}|}" class="view-details"
+                  >détails</a
+                >
+              </div>
+            </div>
+            <div class="car-info">
+              <h3 class="car-model" th:text="${car.model}"></h3>
+              <p
+                class="car-price"
+                th:text="${car.prix_par_jour + ' €/jour'}"
+              ></p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer th:class="footer">
+        <p th:class="text-center">
+      &copy; <span th:text="${#dates.year(#dates.createNow())}"></span> Baniola. All rights reserved
+    </p>
+    </footer>
+  </body>
+</html>

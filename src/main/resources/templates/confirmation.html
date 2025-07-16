@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation de Réservation</title>
+    <link rel="stylesheet" href="aa.css">
+</head>
+<body>
+<header class="header">
+    <a href="/" class="logo">Baniola</a>
+</header>
+
+<main class="main-content">
+    <section class="profile-section">
+        <h1>Merci pour votre réservation !</h1>
+        <p>Votre réservation a été enregistrée avec succès. Voici un récapitulatif :</p>
+
+        <div class="reservation-item">
+            <p><strong>Véhicule :</strong> <span th:text="${voiture.marque} + ' ' + ${voiture.modele}">Mercedes Classe S</span></p>
+            <p><strong>Du :</strong> <span th:text="${reservation.dateDebut}">2025-06-01</span></p>
+            <p><strong>Au :</strong> <span th:text="${reservation.dateFin}">2025-06-05</span></p>
+            <p><strong>Prix total :</strong> <span th:text="${reservation.total}">1000</span> €</p>
+        </div>
+
+        <div class="confirmation-info">
+            <p><strong>Nom du client :</strong> <span th:text="${client.nom}">Ahmed Benali</span></p>
+            <p><strong>Email :</strong> <span th:text="${client.email}">ahmed.benali@example.com</span></p>
+        </div>
+
+        <a href="/" class="cta-button" style="margin-top: 20px; display: inline-block;">Retour à l'accueil</a>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>&copy; 2025 Baniola. Tous droits réservés.</p>
+</footer>
+</body>
+</html>
+

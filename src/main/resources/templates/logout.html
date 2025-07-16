@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Déconnexion - Baniola</title>
+    <link rel="stylesheet" href="/css/aa.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="/" class="logo">Baniola</a>
+      <div class="user-menu">
+        <span th:text="'Utilisateur déconnecté'"></span>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="logout-section">
+        <h1>Vous avez été déconnecté</h1>
+        <p>Merci d'avoir utilisé notre service de location.</p>
+        <a th:href="@{/login/client}" class="cta-button">Se reconnecter</a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2025 Baniola. Tous droits réservés.</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profil Client - Baniola</title>
+    <link rel="stylesheet" href="/css/aa.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="/" class="logo">Baniola</a>
+      <div class="user-menu">
+        <span class="username" th:text="${user.nom}"></span>
+        <div class="dropdown">
+          <button class="dropdown-button">☰</button>
+          <div class="dropdown-content">
+            <a
+            th:href="@{|/profil/${user.id}|}"
+            th:text="'Informations personnelles'"
+          ></a>
+          <a
+            th:href="@{|/historique/${user.id}|}"
+            th:text="'Historique des réservations'"
+          ></a>
+          <a th:href="@{|/logout/${user.id}|}" th:text="'Déconnexion'"></a>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="profile-section">
+        <h1>Mon Profil</h1>
+        <div class="profile-info">
+          <p>
+            <strong>Nom :</strong>
+            <span th:text="${user.nom}"></span>
+          </p>
+          <p>
+            <strong>Prénom :</strong>
+            <span th:text="${user.prenom}"></span>
+          </p>
+          <p>
+            <strong>Email :</strong>
+            <span th:text="${user.email}"></span>
+          </p>
+          <p>
+            <strong>Téléphone :</strong>
+            <span th:text="${user.tel}"></span>
+          </p>
+          <p>
+            <strong>Permis :</strong>
+            <img
+              th:src="(${user.permis_Img})?@{|/images/${user.permis_Img}|}:@{null.jpg}"
+              alt="Permis de conduire"
+              class="permis-image"
+            />
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2025 Baniola. Tous droits réservés.</p>
+    </footer>
+  </body>
+</html>

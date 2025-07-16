@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Formulaire de création de réservation -->
+        <form th:action="@{|/${client_id}/${car_id}/reservation|}" th:object="${reservationform}" method="post">
+            <div class="form-group">
+                <label for="date-deb">Date de début</label>
+                <input type="date" class="form-control" id="date-deb" name="date-deb" th:field="*{date_deb}">
+                <span th:if="${#fields.hasErrors('date_deb')}" th:errors="*{date_deb}" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="date-fin">Date de fin</label>
+                <input type="date" class="form-control" id="date-fin" name="date-fin" th:field="*{date_fin}">
+                <span th:if="${#fields.hasErrors('date_fin')}" th:errors="*{date_fin}" class="text-danger"></span>
+            </div>
+
+            
+
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+
+        
+        <form th:action="@{|/car-details/${client_id}/${car_id}|}" method="get" class="delete-form">
+            <button type="submit" class="btn btn-danger">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Inclusion de la CDN de Bootstrap JS (pour certains composants interactivés) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zyTT60f5GzXw0j8c7j7sWGoQe2RlRijZ1R7Vm0lV" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0v8FqXw9+M2jo7y5K9Zx5A7d6dENtKTYKjT72y+9fvyB+g6p" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0v8FqXw9+M2jo7y5K9Zx5A7d6dENtKTYKjT72y+9fvyB+g6p" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+</body>
+</html>

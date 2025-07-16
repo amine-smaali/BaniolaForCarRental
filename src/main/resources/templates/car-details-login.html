@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Détails Voiture - Baniola</title>
+    <style>
+        /* Reprendre les styles de la page principale */
+        body {
+            font-family: "Montserrat", sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Header - Même style que la page principale */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.6);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .logo {
+        font-size: 2em;
+        font-weight: bold;
+        color: #d4af37;
+        text-decoration: none;
+        letter-spacing: 1.5px;
+        transition: transform 0.3s ease-in-out;
+      }
+
+        /* Section détails */
+        .car-details-container {
+            max-width: 1200px;
+            margin: 150px auto 50px;
+            padding: 30px;
+            display: flex;
+            gap: 40px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .car-image-container {
+            flex: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .car-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .car-info {
+            flex: 1;
+            background: rgba(17, 17, 17, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .car-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #d4af37;
+        }
+
+        .car-specs {
+            margin: 25px 0;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .spec-label {
+            font-weight: 500;
+            color: #aaa;
+        }
+
+        .spec-value {
+            font-weight: 600;
+        }
+
+        .price-tag {
+            font-size: 1.8em;
+            color: #d4af37;
+            text-align: right;
+            margin: 30px 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: #333;
+            color: #d4af37;
+            padding: 12px 30px;
+            border: 1px solid #d4af37;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background: #d4af37;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a th:href="@{/}" class="logo">Baniola</a>
+        <!-- Menu identique à la page principale -->
+    </header>
+
+    <div class="car-details-container">
+        <div class="car-image-container">
+            <img th:src="${voiture.photo} ? @{|/images/${voiture.photo}|} : @{/images/default-car.jpg}" 
+                 alt="Image de la voiture" />
+        </div>
+        
+        <div class="car-info">
+            <h1 class="car-title" th:text="${voiture.marque} + ' ' + ${voiture.model}"></h1>
+            
+            <div class="car-specs">
+                <div class="spec-item">
+                    <span class="spec-label">marque</span>
+                    <span class="spec-value" th:text="${voiture.marque}"></span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">model</span>
+                    <span class="spec-value" th:text="${voiture.model}"></span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">année de fabriquation</span>
+                    <span class="spec-value" th:text="${voiture.annee_fab}"></span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Transmission</span>
+                    <span class="spec-value" th:text="${voiture.transmission}"></span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Kilométrage</span>
+                    <span class="spec-value" th:text="${voiture.kilometrage} + ' km'"></span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">nombre de portes</span>
+                    <span class="spec-value" th:text="${voiture.nbre_porte} "></span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">nombre de portes</span>
+                    <span class="spec-value" th:text="${voiture.prix_par_jour} "></span>
+                </div>
+            </div>
+            
+            
+            
+            
+            <div class="price-tag" th:text="${voiture.prix_par_jour} + ' €/jour'"></div>
+            
+            <a th:href="@{|/${client.id}/client|}" class="back-button">Retour à la collection</a>
+           
+             <a th:if="${voiture.etat == 'Disponible'}"  
+               th:href="@{|/${client.id}/${voiture.id}/reservation|}" 
+               class="back-button"
+              >Reserver </a>
+
+    
+           
+              <a th:if="${voiture.etat == 'Loué' || voiture.etat == 'Non disponible'}" 
+               th:href="@{|/${client.id}/client|}" 
+               class="back-button">Non disponible</a>
+                
+            
+        </div>
+    </div>
+
+    <footer class="footer">
+         <p th:class="text-center">
+      &copy; <span th:text="${#dates.year(#dates.createNow())}"></span> Baniola. All rights reserved
+    </p>
+    </footer>
+</body>
+</html>

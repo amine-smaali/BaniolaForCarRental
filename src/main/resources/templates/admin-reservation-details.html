@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Détails Réservation - Baniola</title>
+    <style>
+        /* Nouveau style adapté aux autres pages */
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Header - Style simplifié comme admin.html */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #fff;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        /* Section détails - Style adapté à car-details.html */
+        .details-container {
+            max-width: 1200px;
+            margin: 100px auto 30px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #222;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .reservation-info {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #222;
+        }
+
+        .car-image-container {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .car-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .actions-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .confirm-button {
+            background: #28a745;
+            color: #fff;
+        }
+
+        .refuse-button {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .back-button {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .confirm-button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .refuse-button:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Animation simplifiée */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .details-container, .header {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a th:href="@{/admin}" class="logo">Baniola Admin</a>
+    </header>
+
+    <div class="details-container">
+        <div class="reservation-info">
+            <h2 class="section-title">Détails de la Réservation</h2>
+            
+            <div class="info-grid">
+    <div class="info-item">
+        <span class="info-label">ID Réservation:</span>
+        <span class="info-value" th:text="${reservation.id}"></span>
+    </div>
+    <div class="info-item">
+        <span class="info-label">Statut:</span>
+        <span class="info-value" th:text="${reservation.statut}"></span>
+    </div>
+    <div class="info-item">
+        <span class="info-label">Date de début:</span>
+        <span class="info-value" th:text="${#temporals.format(reservation.date_deb, 'dd/MM/yyyy')}"></span>
+    </div>
+    <div class="info-item">
+        <span class="info-label">Date de fin:</span>
+        <span class="info-value" th:text="${#temporals.format(reservation.date_fin, 'dd/MM/yyyy')}"></span>
+    </div>
+    <div class="info-item">
+        <span class="info-label">Prix total:</span>
+        <span class="info-value" th:text="${reservation.prixTotale} + ' €'"></span>
+    </div>
+</div>
+        </div>
+
+        <div class="reservation-info">
+            <h2 class="section-title">Informations Client</h2>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Nom:</span>
+                    <span class="info-value" th:text="${client.nom} + ' ' + ${client.prenom}"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value" th:text="${client.email}"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Téléphone:</span>
+                    <span class="info-value" th:text="${client.tel}"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Permis:</span>
+                    <span class="info-value" th:text="${client.permis_Img} ? 'Validé' : 'Non fourni'"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="reservation-info">
+            <h2 class="section-title">Voiture Réservée</h2>
+            
+            <div class="car-image-container">
+                <img th:src="${car.photo} ? @{|/images/${car.photo}|} : @{/images/default-car.jpg}" 
+                     alt="Image de la voiture" />
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Marque:</span>
+                    <span class="info-value" th:text="${car.marque}"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Modèle:</span>
+                    <span class="info-value" th:text="${car.model}"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Année:</span>
+                    <span class="info-value" th:text="${car.annee_fab}"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Prix/jour:</span>
+                    <span class="info-value" th:text="${car.prix_par_jour} + ' €'"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Transmission:</span>
+                    <span class="info-value" th:text="${car.transmission}"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">État:</span>
+                    <span class="info-value" th:text="${car.etat}"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions-container">
+            <a th:href="@{/admin/reservations/{idReservation}/confirmer(idReservation=${reservation.id})}" 
+               class="action-button confirm-button">Confirmer la réservation</a>
+               
+            <a th:href="@{/admin/reservations/{idReservation}/refuser(idReservation=${reservation.id})}" 
+               class="action-button refuse-button">Refuser la réservation</a>
+               
+            <a th:href="@{/admin/reservations}" 
+               class="action-button back-button">Retour aux réservations</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p class="text-center">
+            &copy; <span th:text="${#dates.year(#dates.createNow())}"></span> Baniola. All rights reserved
+        </p>
+    </footer>
+</body>
+</html>

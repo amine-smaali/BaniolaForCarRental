@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historique de Réservations - Baniola</title>
+    <link rel="stylesheet" href="/css/aa.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="/" class="logo">Baniola</a>
+      <div class="user-menu">
+        <span class="username" th:text="${user.nom}">Ahmed Benali</span>
+        <div class="dropdown">
+          <button class="dropdown-button">☰</button>
+          <div class="dropdown-content">
+            <a
+              th:href="@{|/profil/${user.id}|}"
+              th:text="'Informations personnelles'"
+            ></a>
+            <a
+              th:href="@{|/historique/${user.id}|}"
+              th:text="'Historique des réservations'"
+            ></a>
+            <a th:href="@{|/logout/${user.id}|}" th:text="'Déconnexion'"></a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="history-section">
+        <h1>Historique de Réservations</h1>
+        <div class="reservation-list">
+         
+          <div th:each="reservation : ${reservations}" class="reservation-item">
+            <strong>Voiture :</strong>
+            <span th:text="${reservation.car.marque + ' ' + reservation.car.model}"></span>
+            <p>
+              <strong>Début :</strong>
+              <span th:text="${reservation.date_deb}"></span>
+            </p>
+            <p>
+              <strong>Fin :</strong>
+              <span th:text="${reservation.date_fin}"></span>
+            </p>
+            <p>
+              <strong>Statut :</strong>
+              <span th:text="${reservation.statut}"></span>
+            </p>
+            <p>
+              <strong>Prix total :</strong>
+              <span th:text="${reservation.prixTotale}"></span>
+            </p>
+            <form th:if="${reservation.statut == 'en attente' }" 
+                  th:action="@{|/annuler/${reservation.id}|}" 
+                  method="post"
+                  style="display: inline;">
+                      <button type="submit" class="dropbtn">Annuler</button>
+            </form>
+              
+            
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2025 Baniola. Tous droits réservés.</p>
+    </footer>
+  </body>
+</html>

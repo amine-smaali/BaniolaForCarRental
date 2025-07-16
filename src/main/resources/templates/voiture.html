@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="'Détails - ' + ${voiture.marque} + ' ' + ${voiture.modele}">Détails Voiture</title>
+  <link rel="stylesheet" href="aa.css">
+</head>
+<body>
+<header class="header">
+  <a href="/" class="logo">Baniola</a>
+  <nav class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="historique.html">Historique des réservations</a>
+  </nav>
+</header>
+
+<main class="main-content">
+    <div class="detail-section">
+        <section class="profile-section">
+            <h1 th:text="${voiture.marque} + ' ' + ${voiture.modele}">Porsche 911</h1>
+            <img th:src="@{${voiture.imageUrl}}" alt="Image voiture" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+            <p><strong>Année :</strong> <span th:text="${voiture.annee}">2023</span></p>
+            <p><strong>Kilométrage :</strong> <span th:text="${voiture.kilometrage}">15000 km</span></p>
+            <p><strong>Transmission :</strong> <span th:text="${voiture.transmission}">Automatique</span></p>
+            <p><strong>Portes :</strong> <span th:text="${voiture.portes}">2</span></p>
+            <p><strong>Prix par jour :</strong> <span th:text="${voiture.prixParJour}">250</span> €/jour</p>
+        </section>
+
+        <section class="profile-section">
+            <h2>Réserver cette voiture</h2>
+            <form th:action="@{/reservation}" method="post">
+                <input type="hidden" name="carId" th:value="${voiture.id}" />
+                
+                <label for="debut">Date de début :</label><br>
+                <input type="date" id="debut" name="dateDebut" required><br><br>
+
+                <label for="fin">Date de fin :</label><br>
+                <input type="date" id="fin" name="dateFin" required><br><br>
+
+                <!-- Affichage des erreurs éventuelles -->
+                <div th:if="${#fields.hasErrors('dateDebut')}" class="error">
+                    <p th:errors="*{dateDebut}">Erreur date début</p>
+                </div>
+                <div th:if="${#fields.hasErrors('dateFin')}" class="error">
+                    <p th:errors="*{dateFin}">Erreur date fin</p>
+                </div>
+
+                <input type="submit" value="Réserver" class="cta-button">
+            </form>
+        </section>
+    </div>
+</main>
+
+<footer class="footer">
+  <p>&copy; 2025 Baniola. Tous droits réservés.</p>
+</footer>
+</body>
+</html>
+

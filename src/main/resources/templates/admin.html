@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Location de Voitures</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      .container {
+        max-width: 960px;
+        margin: 40px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 600;
+        color: #222;
+      }
+
+      .formm {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      input,
+      button {
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        transition: all 0.2s ease;
+      }
+
+      input:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      button {
+        background-color: #007bff;
+        color: white;
+        font-weight: 600;
+        border: none;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      th,
+      td {
+        text-align: center;
+        padding: 12px;
+        border-bottom: 1px solid #e0e0e0;
+        
+      }
+
+      th {
+        background-color: #f1f3f5;
+        font-weight: 600;
+      }
+
+      .actions button {
+        margin: 0 5px;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+      }
+
+      .edit-btn {
+        background-color: #ffc107;
+        color: #000;
+      }
+
+      .delete-btn {
+        background-color: #dc3545;
+        color: #fff;
+      }
+
+      .edit-btn:hover {
+        background-color: #e0a800;
+      }
+
+      .delete-btn:hover {
+        background-color: #c82333;
+      }
+      .details-btn {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.details-btn:hover {
+  background-color: #138496;
+}
+
+      @media (max-width: 600px) {
+        form {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Panneau Admin - Location de Voitures</h1>
+
+      <form class="formm" id="carForm">
+        <input type="text" id="brand" placeholder="Marque" required />
+        <input type="text" id="model" placeholder="Modèle" required />
+        <input type="number" id="year" placeholder="Année" required />
+        <button type="submit">Rechercher</button>
+      </form >
+      <a th:href="@{/admin/create}"><button>Ajouter nouvelle voiture</button></a>
+      <a th:href="@{/admin/reservations}" style="margin-left: 10px;">
+  <button style="background-color: #6f42c1;">Réservations</button></a>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Marque</th>
+            <th>Modèle</th>
+            <th>Année</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="carList" th:each="car: ${cars}">
+          <td>      <img
+            th:src="(${car.photo})?@{|/images/${car.photo}|}:@{null.jpg}"
+            alt="photo"
+            width="50"
+            height="50"
+          />
+          
+        </td>
+          <td th:text="${car.marque}">Marque</td>
+          <td th:text="${car.model}">Modèle</td>
+          <td th:text="${car.annee_fab}">Année</td>
+          <td th:text="${car.etat}">Statut</td>
+          <td>
+            <a th:href="@{|/admin/edit/${car.id}|}"><button class="edit-btn" >Modifier</button></a>
+            <form th:action="@{|/admin/delete/${car.id}|}" method="post"><button class="delete-btn" type="submit">Désactiver</button></form>
+            <a th:href="@{|/admin/details/${car.id}|}"><button class="details-btn">Détails</button></a>
+          </td>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
